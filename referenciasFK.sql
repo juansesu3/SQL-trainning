@@ -1,4 +1,4 @@
-
+use prueba1;
 -- Creando tablas 
 create table `t_domicilio` (
 	 `id_domicilio` int(11) not null auto_increment,
@@ -22,9 +22,9 @@ create table `t_persona` (
 insert into t_persona (paterno, 
 						materno, 
                         nombre)
-values('Martine', 
-	   'Ducuara', 
-	   'Juliana'
+values('Suarez', 
+	   'Ramirez', 
+	   'Juan'
          );
          
          
@@ -59,13 +59,13 @@ ADD CONSTRAINT `fk_idpersonadomicilio`
 insert into t_domicilio (id_persona, 
 						paids, 
                         cp)
-values(4, 
+values(5, 
 	   'Colombia', 
 	   760001
          );
          
 -- Vamos a intentar borrar a la persona que tiene un domicilio
-delete from t_persona where id_persona=4;
+delete from t_persona where id_persona=5;
 -- No puede borrarse la persona porque hay una referencia a un domicilio
 -- El paso para poder borrar a la persona seriaq primero eliminar la referencia(domicilio) y alli si nos prmitira borrar a la persona 
 
