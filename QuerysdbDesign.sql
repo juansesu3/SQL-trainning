@@ -13,7 +13,10 @@ create table alumno(
                     telefono varchar(50) default null,
                     primary key(n_matricula)
                     )engine=InnoDB default charset=utf8mb3;
-                    
+
+-- Modificando el tipo de dato de una tabla 
+ALTER TABLE alumno MODIFY codigo_asignatura int(11);
+
 -- Insertando valores  a la tabla alumno
 insert into alumno (
 					nombre,
@@ -21,11 +24,14 @@ insert into alumno (
 					fechaNacimiento, 
                     telefono
                     )
-values('Juan Suarez', 
-	   3, 
-	   '1994-10-29',
-       '+41 78 264 5121'
+values('Sage Hautrie', 
+	   7, 
+	   '1993-10-2',
+       '+21 30 264 5121'
          );
+         
+-- Borrando todas las tuplas(registros) de una tabla
+truncate table alumno;
 
 -- Creando tabla asignatura
 create table asignatura(
@@ -42,9 +48,14 @@ insert into asignatura (
                     
 					)
 values(
-		10,
-		'Algebra Lineal'
+		11,
+		'Ecuaciones lineales'
 		);
+        
+-- Actualizando el dato de un campo(columna) de una tabla 
+update asignatura set id_p=14 
+				where codigo_asignatura=7;
+
 
 -- Creando tabla profesor 
 create table profesor(
@@ -55,9 +66,11 @@ create table profesor(
                        codigo_asignatura int(11) not null,
                        primary key(id_p) 
                        )engine=InnoDB auto_increment=10 default charset=utf8mb3;
-
+                       
+ALTER TABLE profesor DROP COLUMN codigo_asignatura;
 -- Insertando valores a la tabla profesor 
 insert into profesor (
+					
 					nombre, 
 					especialidad, 
 					telefono,
@@ -66,30 +79,38 @@ insert into profesor (
 values(
 	   'Humberto Mora', 
 	   'Matematicas', 
-	   '+57 3521457896',
-       3
+	   '+57 352 147 7896',
+       4
        );
-
+       
+-- Actualizando el dato de un campo(columna) de una tabla
+update profesor set codigo_asignatura=5 
+				where id_p=11;
 
 -- Mostrando tablas
 show tables;
 
 -- Describiendo tablas
 describe alumno;
+desc alumno;
 describe asignatura;
 desc asignatura;
 describe profesor;
+desc profesor;
 
 -- Seleccionando tablas
 select * from alumno;
 select * from asignatura;
 select * from profesor;
 
+-- Borrando un registro de un alumno 
+delete from alumno where n_matricula=4;
+
 
 
 
 -- foreng keys 
-
+-- Relacion asignatura profesor  
 ALTER TABLE `colegio`.`asignatura` 
 ADD INDEX `fk_id_p_idx` (`id_p` ASC) VISIBLE;
 ;
@@ -99,6 +120,39 @@ ADD CONSTRAINT `fk_id_p`
   REFERENCES `colegio`.`profesor` (`id_p`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
+  
+  
+-- Relacion profesor asignatuara 
+ALTER TABLE `colegio`.`profesor` 
+ADD INDEX `fk_cod_asignatura_idx` (`codigo_asignatura` ASC) VISIBLE;
+;
+ALTER TABLE `colegio`.`profesor` 
+ADD CONSTRAINT `fk_cod_asignatura`
+  FOREIGN KEY (`codigo_asignatura`)
+  REFERENCES `colegio`.`asignatura` (`codigo_asignatura`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+  
+  
+  
+  
+-- Consulta que devuelve los registros en la tabla alumnos
+select * from alumno;
+
+
+-- Consulta que devuelve los registros en la tabla profesores
+select * from profesor;
+
+
+-- Consulta que devuelve el numero de alumnos que esatn registrados 
+select count(*) as registro from alumno;
+
+
+-- consulta que devuelve el nombre de alumnos, la asignatura en la que esta matriculado y el nombre del profersor que imparte la clase
+
+select * from alumno;
+
+select ta.nombre, ta.codigo_asignatura from alumno as ta;
 
 
 
